@@ -5,6 +5,7 @@ export class GeminiService {
   private ai: GoogleGenAI;
 
   constructor() {
+    // Note pour l'ingénieur : process.env.API_KEY doit être configuré dans ton environnement local ou Vercel.
     this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
   }
 
@@ -31,6 +32,10 @@ COLOR & LIGHTING CORE:
 - Professional digital ink line-work.`;
     
     try {
+      if (!process.env.API_KEY) {
+        throw new Error("API_KEY_MISSING: Configure la variable d'environnement pour activer l'IA.");
+      }
+
       const parts: any[] = references.map(ref => ({
         inlineData: {
           data: ref.data.split(',')[1],
@@ -46,14 +51,18 @@ COLOR & LIGHTING CORE:
         config: { imageConfig: { aspectRatio: "1:1" } }
       });
 
-      for (const part of response.candidates?.[0]?.content?.parts || []) {
+      if (!response.candidates || response.candidates.length === 0) {
+        throw new Error("EMPTY_RESPONSE: L'IA n'a pas retourné de candidats.");
+      }
+
+      for (const part of response.candidates[0].content.parts) {
         if (part.inlineData) {
           return `data:image/png;base64,${part.inlineData.data}`;
         }
       }
-      throw new Error("AI did not return image data.");
+      throw new Error("NO_IMAGE_PART: Aucun segment binaire d'image trouvé.");
     } catch (error) {
-      console.error("Gemini Image Gen Error:", error);
+      console.error("Gemini Critical Error:", error);
       throw error;
     }
   }
