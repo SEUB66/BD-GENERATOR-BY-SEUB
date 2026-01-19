@@ -1,0 +1,7 @@
+{
+  "name": "MISSION GLITCH — PRO STUDIO 2026",
+  "description": "Creative Suite Haute-Fidélité par seuB.CA. Génération de BD interactive propulsée par l'IA Gemini.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
