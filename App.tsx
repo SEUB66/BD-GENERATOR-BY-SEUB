@@ -132,6 +132,24 @@ export default function App() {
     }));
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'MISSION GLITCH : SEB & NADIA EN GASPÉSIE',
+      text: 'Découvre notre BD interactive produite avec Gemini IA !',
+      url: window.location.href,
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert("Lien copié dans le presse-papier !");
+      }
+    } catch (err) {
+      console.error('Error sharing', err);
+    }
+  };
+
   const handlePublish = () => {
     setIsPublishing(true);
     setTimeout(() => {
@@ -204,7 +222,7 @@ export default function App() {
               onClick={() => {setViewMode('editor'); setActiveSection('universe');}} 
             />
             <NavButton 
-              label="SYNC_ASSETS" icon="◈" color="#BF00FF" 
+              label="HÉBERGEMENT_PRO" icon="◈" color="#BF00FF" 
               active={activeSection === 'assets' && viewMode === 'editor'} 
               onClick={() => {setViewMode('editor'); setActiveSection('assets');}} 
             />
@@ -293,46 +311,75 @@ export default function App() {
               </div>
             )}
 
-            {/* ASSET SYNC */}
+            {/* ASSET SYNC & DEPLOYMENT GUIDE */}
             {activeSection === 'assets' && (
-              <div className="studio-panel p-20 rounded-[4rem] max-w-6xl mx-auto space-y-20 border-t-[10px] border-t-[#BF00FF] shadow-[0_0_150px_rgba(191,0,255,0.15)]">
-                <div className="text-center space-y-6">
-                  <h3 className="font-glitch text-8xl text-white tracking-[0.3em] uppercase">BIO_TERMINAL</h3>
-                  <p className="font-mono text-[13px] text-[#BF00FF] uppercase tracking-[1em] font-black animate-pulse">Synchronisation de l'identité visuelle 2026</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-                  {['seb', 'nadia', 'eevee'].map((k) => (
-                    <div key={k} className="flex flex-col items-center gap-10 group">
-                      <div 
-                        onClick={() => handleRefUpload(k as any)}
-                        className={`w-full aspect-square bg-benday rounded-[3rem] border-4 border-dashed transition-all duration-700 cursor-pointer flex items-center justify-center overflow-hidden relative shadow-2xl ${references[k as keyof ReferenceImages] ? 'border-[#BF00FF] border-solid shadow-[0_0_80px_rgba(191,0,255,0.4)]' : 'border-white/5 hover:border-[#BF00FF]/50 hover:bg-white/[0.03]'}`}
-                      >
-                        {references[k as keyof ReferenceImages] ? (
-                          <img src={references[k as keyof ReferenceImages]} className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2s]" alt="Ref" />
-                        ) : (
-                          <div className="flex flex-col items-center gap-8 text-white/5 group-hover:text-white/50 transition-all scale-110">
-                            <span className="text-9xl font-comic">+</span>
-                            <span className="font-mono text-xs font-black uppercase tracking-[0.5em]">SYNC_{k}</span>
-                          </div>
-                        )}
-                        <div className="absolute top-6 right-6 px-5 py-2.5 bg-black/90 backdrop-blur-2xl rounded-2xl text-[10px] font-mono text-white/70 border-2 border-white/10 uppercase tracking-[0.3em] font-black">REF_ARCHIVE</div>
-                      </div>
-                      <span className="font-mono text-base font-black text-white/20 uppercase tracking-[0.8em] group-hover:text-[#BF00FF] group-hover:tracking-[1em] transition-all duration-500">{k}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="pt-20 border-t-2 border-white/5 flex flex-col items-center gap-14">
-                  <div className="flex gap-20 grayscale opacity-10 scale-125">
-                     <DecorativeIcon src="banana.png" className="w-16 h-16" />
-                     <DecorativeIcon src="unicorn.png" className="w-16 h-16" />
-                     <DecorativeIcon src="bottle.png" className="w-16 h-16" />
+              <div className="space-y-16">
+                <div className="studio-panel p-20 rounded-[4rem] max-w-6xl mx-auto space-y-20 border-t-[10px] border-t-[#BF00FF] shadow-[0_0_150px_rgba(191,0,255,0.15)]">
+                  <div className="text-center space-y-6">
+                    <h3 className="font-glitch text-8xl text-white tracking-[0.3em] uppercase">SYNC_TERMINAL</h3>
+                    <p className="font-mono text-[13px] text-[#BF00FF] uppercase tracking-[1em] font-black animate-pulse">Synchronisation de l'identité visuelle 2026</p>
                   </div>
-                  <button 
-                    onClick={() => {if(confirm("DANGER: WIPE ALL STUDIO DATA?")) {localStorage.clear(); location.reload();}}}
-                    className="w-full py-8 border-4 border-red-500/10 text-red-500/20 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/60 text-sm font-mono font-black rounded-[2rem] transition-all uppercase tracking-[1.2em]"
-                  >
-                    WIPE_STUDIO_CORE_MEMORY
-                  </button>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                    {['seb', 'nadia', 'eevee'].map((k) => (
+                      <div key={k} className="flex flex-col items-center gap-10 group">
+                        <div 
+                          onClick={() => handleRefUpload(k as any)}
+                          className={`w-full aspect-square bg-benday rounded-[3rem] border-4 border-dashed transition-all duration-700 cursor-pointer flex items-center justify-center overflow-hidden relative shadow-2xl ${references[k as keyof ReferenceImages] ? 'border-[#BF00FF] border-solid shadow-[0_0_80px_rgba(191,0,255,0.4)]' : 'border-white/5 hover:border-[#BF00FF]/50 hover:bg-white/[0.03]'}`}
+                        >
+                          {references[k as keyof ReferenceImages] ? (
+                            <img src={references[k as keyof ReferenceImages]} className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2s]" alt="Ref" />
+                          ) : (
+                            <div className="flex flex-col items-center gap-8 text-white/5 group-hover:text-white/50 transition-all scale-110">
+                              <span className="text-9xl font-comic">+</span>
+                              <span className="font-mono text-xs font-black uppercase tracking-[0.5em]">SYNC_{k}</span>
+                            </div>
+                          )}
+                          <div className="absolute top-6 right-6 px-5 py-2.5 bg-black/90 backdrop-blur-2xl rounded-2xl text-[10px] font-mono text-white/70 border-2 border-white/10 uppercase tracking-[0.3em] font-black">REF_ARCHIVE</div>
+                        </div>
+                        <span className="font-mono text-base font-black text-white/20 uppercase tracking-[0.8em] group-hover:text-[#BF00FF] group-hover:tracking-[1em] transition-all duration-500">{k}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* DEPLOYMENT GUIDE FOR ENGINEERS */}
+                <div className="studio-panel p-20 rounded-[4rem] max-w-6xl mx-auto space-y-12 border-t-[10px] border-t-[#00FFA3] shadow-[0_0_150px_rgba(0,255,163,0.15)]">
+                   <div className="flex items-center justify-between border-b border-white/10 pb-10">
+                      <div>
+                        <h3 className="font-glitch text-5xl text-white tracking-widest uppercase">HÉBERGEMENT_PRO</h3>
+                        <p className="font-mono text-sm text-[#00FFA3] uppercase tracking-[0.5em] font-black">Déploiement sur un URL Public seuB.CA</p>
+                      </div>
+                      <DecorativeIcon src="ufo.png" className="w-16 h-16" />
+                   </div>
+                   
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 font-mono text-sm">
+                      <div className="space-y-6">
+                        <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                          <h4 className="text-[#00FFA3] font-black mb-4 uppercase tracking-widest">Étape 1: Télécharger le code</h4>
+                          <p className="text-white/60 leading-relaxed">En tant qu'ingénieur, tu peux copier les fichiers <span className="text-white font-bold">App.tsx, index.html, services/geminiService.ts</span> etc. dans un projet React/Vite local.</p>
+                        </div>
+                        <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                          <h4 className="text-[#00FFA3] font-black mb-4 uppercase tracking-widest">Étape 2: Push sur GitHub</h4>
+                          <p className="text-white/60 leading-relaxed">Crée un repo privé ou public pour sécuriser tes assets. C'est la base pour avoir un déploiement continu.</p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-6">
+                        <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                          <h4 className="text-[#00FFA3] font-black mb-4 uppercase tracking-widest">Étape 3: Connecter Vercel</h4>
+                          <p className="text-white/60 leading-relaxed">Va sur <a href="https://vercel.com" target="_blank" className="underline text-[#00E5FF]">Vercel.com</a>. Importe ton repo. Ils vont te générer un URL instantanément (ex: <span className="italic text-white">mission-glitch.vercel.app</span>).</p>
+                        </div>
+                        <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                          <h4 className="text-[#00FFA3] font-black mb-4 uppercase tracking-widest">Étape 4: Configurer l'API</h4>
+                          <p className="text-white/60 leading-relaxed">Dans les réglages de ton projet Vercel, ajoute la variable <span className="text-[#BF00FF] font-bold">API_KEY</span> avec ta clé Gemini pour que l'IA fonctionne en prod.</p>
+                        </div>
+                      </div>
+                   </div>
+                   
+                   <div className="bg-black/60 p-8 rounded-[2rem] border-2 border-dashed border-white/10 text-center">
+                      <p className="font-mono text-xs text-white/40 uppercase tracking-[0.4em] mb-6">Prêt pour la mise en ligne, bro ?</p>
+                      <button onClick={handleShare} className="btn-glitch px-12 py-5 text-lg font-comic tracking-[0.3em]">TESTER_PARTAGE_NATIF</button>
+                   </div>
                 </div>
               </div>
             )}
@@ -517,12 +564,15 @@ export default function App() {
           </div>
         </div>
         
-        <div className="flex items-center gap-14 mt-12 xl:mt-0">
-          <div className="flex gap-10 opacity-30 mr-16 scale-150">
-             <DecorativeIcon src="banana_pink.png" />
-             <DecorativeIcon src="ufo.png" />
-             <DecorativeIcon src="bomb.png" />
-          </div>
+        <div className="flex items-center gap-10 mt-12 xl:mt-0">
+          <button 
+            onClick={handleShare}
+            className="flex items-center gap-4 bg-white/5 px-8 py-4 rounded-2xl border-2 border-white/10 hover:bg-[#00E5FF] hover:text-black hover:border-black transition-all group/share"
+          >
+             <span className="font-mono text-[12px] font-black uppercase tracking-widest">Partager_URL</span>
+             <svg className="w-6 h-6 group-hover/share:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+          </button>
+          
           <div className="text-right hidden sm:block">
             <div className="font-mono text-[11px] text-white/10 uppercase tracking-[1em] mb-4 font-black">Elite_Creative_Archive_seuB.CA</div>
             <div className="font-comic text-5xl text-white/40 group hover:text-[#00E5FF] transition-all cursor-none tracking-[0.4em] flex items-center gap-8">
