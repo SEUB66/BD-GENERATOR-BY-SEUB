@@ -15,136 +15,130 @@
         --color-bg: #050507;
         --color-lime: #A2D149;
         --color-pink: #FF007F;
-        --color-turq: #38B2AC;
+        --color-teal: #00E5FF;
       }
       
       html, body {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
+        height: 100%; width: 100%; margin: 0; padding: 0;
         background-color: var(--color-bg);
-        color: #E2E2E6;
-        font-family: 'Outfit', sans-serif;
+        color: #E2E2E6; font-family: 'Outfit', sans-serif;
         overflow-x: hidden;
       }
 
+      /* BACKGROUND ULTRA-TEXTURED */
       .bg-mystery {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        background: radial-gradient(circle at 10% 10%, #1a1a20 0%, #050507 100%);
+        position: fixed; inset: 0; z-index: -1;
+        background: #050507;
+        overflow: hidden;
       }
 
+      /* Texture de grain de papier/bruit animée */
+      .bg-texture {
+        position: absolute; inset: -100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        opacity: 0.05;
+        animation: noiseMove 0.5s infinite steps(2);
+        pointer-events: none;
+      }
+
+      @keyframes noiseMove {
+        0% { transform: translate(0,0); }
+        50% { transform: translate(-1%, -1%); }
+        100% { transform: translate(1%, 1%); }
+      }
+
+      /* Auras colorées mouvantes */
+      .bg-aura {
+        position: absolute; width: 120vw; height: 120vh;
+        background: 
+          radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.06) 0%, transparent 40%),
+          radial-gradient(circle at 90% 80%, rgba(255, 0, 127, 0.06) 0%, transparent 40%),
+          radial-gradient(circle at 50% 50%, rgba(162, 209, 73, 0.03) 0%, transparent 60%);
+        filter: blur(100px);
+        animation: auraFlow 25s infinite alternate ease-in-out;
+      }
+
+      @keyframes auraFlow {
+        0% { transform: scale(1) translate(0, 0) rotate(0deg); }
+        50% { transform: scale(1.1) translate(5%, 2%) rotate(2deg); }
+        100% { transform: scale(1) translate(-2%, 5%) rotate(-2deg); }
+      }
+
+      /* Grid Cyber-Punk avec perspective */
       .grid-overlay {
-        position: absolute;
-        inset: 0;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        position: absolute; inset: 0;
+        background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
         background-size: 80px 80px;
-        mask-image: radial-gradient(circle at center, black, transparent 90%);
+        mask-image: radial-gradient(circle at center, black, transparent 80%);
+        opacity: 0.5;
       }
 
-      /* HEADER : LOGOS MASSIPS À GAUCHE / NAV À DROITE */
-      .app-master-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 40px 60px;
-        position: relative;
-        z-index: 1000;
+      /* Effet Scanlines CRT */
+      .scanlines {
+        position: absolute; inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.1),
+          rgba(0, 0, 0, 0.1) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0.4;
       }
 
-      .brand-citadel {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        flex-shrink: 0;
+      /* Vignettage et lueur de tube cathodique */
+      .crt-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+        z-index: 5;
       }
 
-      .logo-van-mega {
-        height: 150px; /* Augmenté pour impact */
-        width: auto;
-        object-fit: contain;
-        filter: drop-shadow(0 0 30px rgba(162, 209, 73, 0.2));
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      .logo-van-mega:hover { transform: scale(1.1) rotate(-3deg); }
-
-      .logo-title-mega {
-        height: 110px; /* Augmenté pour impact */
-        width: auto;
-        object-fit: contain;
-        filter: drop-shadow(0 0 40px rgba(255, 0, 127, 0.1));
+      /* Particules DNA flottantes */
+      .particles {
+        position: absolute; inset: 0;
+        background-image: radial-gradient(white 1px, transparent 1px);
+        background-size: 100px 100px;
+        opacity: 0.03;
+        animation: particlesMove 60s infinite linear;
       }
 
-      .nav-island {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        background: rgba(10, 10, 12, 0.8);
-        padding: 12px 30px;
-        border-radius: 20px;
+      @keyframes particlesMove {
+        from { background-position: 0 0; }
+        to { background-position: 1000px 1000px; }
+      }
+
+      .prestige-border {
         border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
         backdrop-blur: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        background: rgba(8, 8, 12, 0.7);
       }
-
-      .nav-btn {
-        font-family: 'Silkscreen', cursive;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-size: 0.9rem;
-        color: #666;
-        padding: 10px 20px;
-        transition: all 0.3s;
-        border-radius: 8px;
-      }
-      .nav-btn.active {
-        color: var(--color-lime);
-        background: rgba(162, 209, 73, 0.05);
-        text-shadow: 0 0 10px var(--color-lime);
-      }
-
-      .btn-primary-action {
-        font-family: 'Silkscreen', cursive;
-        background: var(--color-pink);
-        color: #fff;
-        padding: 14px 32px;
-        font-size: 1rem;
-        font-weight: 900;
-        border-radius: 4px;
-        box-shadow: 8px 8px 0 #000;
-        transition: all 0.2s;
-        text-transform: uppercase;
-      }
-      .btn-primary-action:hover {
-        transform: translate(-4px, -4px);
-        box-shadow: 12px 12px 0 #000;
-      }
-
-      /* COMPOSANTS UI */
-      .mission-briefing-box {
-        background: linear-gradient(135deg, rgba(56, 178, 172, 0.05), rgba(255, 0, 127, 0.05));
-        border: 2px solid rgba(255,255,255,0.05);
-        border-left: 8px solid var(--color-lime);
-        padding: 30px;
-        margin-bottom: 50px;
-        border-radius: 12px;
-      }
-
-      .panel-card {
-        background: #08080a;
-        border: 2px solid #111;
-        transition: all 0.3s ease;
-      }
-      .panel-card:hover { border-color: var(--color-lime); }
 
       .font-pixel { font-family: 'Silkscreen', cursive; }
       .font-comic { font-family: 'Bangers', cursive; }
 
-      ::-webkit-scrollbar { width: 12px; }
-      ::-webkit-scrollbar-thumb { background: #222; border-radius: 6px; border: 3px solid #050507; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: #050507; }
+      ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 5px; border: 2px solid #050507; }
+      
+      /* Hover Glitch pour le texte interactif */
+      .glitch-hover:hover {
+        text-shadow: 2px 0 var(--color-pink), -2px 0 var(--color-teal);
+        animation: glitchEffect 0.2s infinite;
+      }
+
+      @keyframes glitchEffect {
+        0% { transform: translate(0); }
+        25% { transform: translate(-1px, 1px); }
+        50% { transform: translate(1px, -1px); }
+        75% { transform: translate(-1px, -1px); }
+        100% { transform: translate(0); }
+      }
     </style>
 <script type="importmap">
 {
@@ -161,7 +155,12 @@
 </head>
 <body>
     <div class="bg-mystery">
-      <div class="grid-overlay"></div>
+        <div class="bg-texture"></div>
+        <div class="bg-aura"></div>
+        <div class="grid-overlay"></div>
+        <div class="particles"></div>
+        <div class="scanlines"></div>
+        <div class="crt-vignette"></div>
     </div>
     <div id="root"></div>
 </body>

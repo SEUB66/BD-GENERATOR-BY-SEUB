@@ -1,4 +1,11 @@
 
+export interface Character {
+  id: string;
+  name: string;
+  personality: string;
+  avatar?: string;
+}
+
 export interface Panel {
   id: string;
   description: string;
@@ -13,16 +20,21 @@ export interface ComicPage {
 }
 
 export interface ComicProject {
+  id: string;
   title: string;
   pages: ComicPage[];
   style: string;
   globalContext: string;
+  characters: Character[];
+  author: string;
+  publishedAt?: string;
 }
 
-export interface ReferenceImages {
-  seb?: string;
-  nadia?: string;
-  eevee?: string;
+export interface Branding {
+  van?: string;
+  square?: string;
+  banner?: string;
+  title?: string;
 }
 
-export type ViewMode = 'editor' | 'reader';
+export type ViewMode = 'studio' | 'assets' | 'library' | 'author' | 'reader';
