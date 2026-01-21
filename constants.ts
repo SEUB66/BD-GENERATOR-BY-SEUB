@@ -2,19 +2,20 @@
 import { ComicProject } from './types';
 
 export const INITIAL_COMIC_DATA: ComicProject = {
-  title: "MISSION GLITCH : PRESTIGE 2026",
-  style: "High-End Professional Comic Art, Clean Lineart, Vibrant CMYK Colors, Dynamic Marvel Composition, Modern Studio Lighting, High Fidelity Textures, Retro-Futuristic Glitch Accents.",
-  globalContext: `STUDIO CORE PARAMETERS seuB.CA 2026:
-- Theme: Sci-Fi / Action Adventure
-- Aesthetics: Premium Digital Comic v.2026
-- Characters: Consistent high-fidelity features.
-- Protagonists: Seb (Casquette Expos, Barbe), Nadia (Silhouette athlétique, Héroïque), Eevee (Sheltie Yeux Vairons).`,
+  title: "THE MYSTERY BD MACHINE : WESTFALIA_SYNC",
+  style: "Ultra High-End Professional Comic Art, Westfalia Van Aesthetic, Vibrant Pop Art colors, Clean Bold Lineart, Dynamic Composition, Studio Lighting, Primary colors with Neon Pink and Teal accents.",
+  globalContext: `STUDIO CORE PARAMETERS MBDM OFFICIAL 2026:
+- Theme: Mystery / Adventure / Cyber-Noir
+- Aesthetics: Westfalia Van teal & dark grey colors. Professional comic book textures.
+- Mandatory Colors: Teal (#38B2AC), Cyber Pink (#FF007F), Slate Grey (#2C2C34), Electric Blue.
+- Characters: Consistent high-detail comic features.
+- Protagonists: Seb (Urbain), Nadia (Heroic), Eevee (Sheltie).`,
   pages: [
     { 
-      pageNumber: 0, 
-      title: "COUVERTURE_OFFICIELLE", 
+      pageNumber: 1, 
+      title: "SCENE_START_LINK", 
       panels: [
-        { id: "p0-1", description: "Illustration de couverture épique : Seb, Nadia et Eevee devant un coucher de soleil sur les falaises de la Gaspésie, avec des distorsions glitch chromatiques dans le ciel.", status: 'idle' }
+        { id: "p1-1", description: "Le van Westfalia Mystery BD Machine roule sur une route futuriste sous un ciel de néons. Seb est au volant, concentré. Nadia regarde la carte holographique. Eevee est assise fièrement à l'arrière.", status: 'idle' }
       ] 
     }
   ]

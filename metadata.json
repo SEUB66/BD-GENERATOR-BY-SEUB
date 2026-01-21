@@ -1,6 +1,6 @@
 {
-  "name": "MISSION GLITCH — PRO STUDIO 2026",
-  "description": "Creative Suite Haute-Fidélité par seuB.CA. Génération de BD interactive propulsée par l'IA Gemini.",
+  "name": "MISSION GLITCH — seub.CA 2026",
+  "description": "Premium AI Comic Studio powered by Gemini. Prompt, Generate, Refine.",
   "requestFramePermissions": [
     "camera"
   ]
